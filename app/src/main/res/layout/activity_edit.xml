@@ -1,0 +1,109 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.buu.se.addressbook.Detail">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/det_img"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/icon"
+            android:layout_marginEnd="184dp"
+            android:layout_marginBottom="340dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="Name"
+            android:ems="10"
+            android:id="@+id/det_name"
+            android:layout_gravity="right|top"
+            android:textColor="@color/icons" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="Company Name"
+            android:ems="10"
+            android:id="@+id/det_company"
+            android:layout_gravity="right|top"
+            android:layout_marginTop="38dp"
+            android:textColor="@color/icons" />
+
+        <EditText
+            android:layout_width="246dp"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:hint="myemail@mail.com"
+            android:ems="10"
+            android:id="@+id/det_email"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginTop="-80dp"
+            android:textColor="@color/icons" />
+
+        <EditText
+            android:layout_width="248dp"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:hint="0812345678"
+            android:ems="10"
+            android:id="@+id/det_tel"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginTop="-30dp"
+            android:textColor="@color/icons" />
+
+        <ImageView
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:id="@+id/imageView3"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginTop="-80dp"
+            android:background="@android:drawable/ic_dialog_email"
+            android:layout_marginLeft="15dp" />
+
+        <ImageView
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:id="@+id/imageView4"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginTop="-30dp"
+            android:background="@android:drawable/stat_sys_speakerphone"
+            android:layout_marginLeft="14dp" />
+
+        <ImageView
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:id="@+id/imageView5"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/ic_map"
+            android:layout_marginLeft="10dp" />
+
+        <EditText
+            android:layout_width="245dp"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:id="@+id/editText7"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/icons" />
+
+    </FrameLayout>
+
+</RelativeLayout>

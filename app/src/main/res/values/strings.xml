@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Address Book</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_log_in">LogIn</string>
+    <string name="title_activity_address">Address</string>
+    <string name="title_activity_catagory">Catagory</string>
+    <string name="title_activity_edit_address">EditAddress</string>
+    <string name="title_activity_detail">Detail</string>
+</resources>
