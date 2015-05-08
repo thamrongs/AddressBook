@@ -18,7 +18,7 @@
             android:id="@+id/det_img"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
-            android:background="@drawable/icon"
+            android:background="@drawable/img_profile"
             android:layout_marginEnd="184dp"
             android:layout_marginBottom="340dp"
             android:layout_alignParentBottom="true"

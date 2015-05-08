@@ -13,7 +13,7 @@
             android:layout_height="76dp"
             android:id="@+id/imageView"
             android:layout_gravity="left|center_vertical"
-            android:background="@drawable/icon"/>
+            android:background="@drawable/img_profile"/>
 
         <TextView
             android:layout_width="wrap_content"
