@@ -14,7 +14,9 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/cat_name"
             android:layout_gravity="left|center_vertical"
-            android:layout_marginLeft="10dp" />
+            android:layout_marginLeft="10dp"
+            android:text="catagory name"
+            android:textColor="@color/primary_text" />
 
     </FrameLayout>
 </LinearLayout>

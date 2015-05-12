@@ -20,7 +20,6 @@
             android:layout_gravity="center"
             android:background="#00000000"
             android:textColorHint="#B6B6B6"
-            android:textColor="#00796B"
             android:layout_marginTop="-34dp"
             android:layout_marginLeft="15dp" />
 
@@ -32,7 +31,6 @@
             android:layout_marginTop="12dp"
             android:background="#00000000"
             android:textColorHint="#B6B6B6"
-            android:textColor="#00796B"
             android:layout_marginLeft="15dp" />
 
         <Button
@@ -54,7 +52,8 @@
             android:layout_gravity="center"
             android:layout_marginLeft="-4dp"
             android:layout_marginTop="160dp"
-            android:background="#727272" />
+            android:background="#727272"
+            android:onClick="onClickRegister" />
 
     </FrameLayout>
 </RelativeLayout>

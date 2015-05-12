@@ -3,10 +3,7 @@ package com.buu.se.addressbook;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,35 +20,37 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class LogIn extends Activity {
+public class Register extends Activity {
 
-    //final int MYACTIVITY_REQUEST_CODE = 101;
-    private EditText user, pass;
-    private String username, password, baseurl, fullurl;
     ProgressDialog prgDialog;
+    private EditText fname,lname, user, pass, confirm;
+    private String firstname,lastname,username, password, confm, fullurl;
+    SharedPreferences persondata;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_log_in);
+        setContentView(R.layout.activity_register);
 
-        user = (EditText) findViewById(R.id.email);
-        pass = (EditText) findViewById(R.id.password);
+        fname = (EditText) findViewById(R.id.reg_fname);
+        lname = (EditText) findViewById(R.id.reg_lname);
+        user = (EditText) findViewById(R.id.reg_user);
+        pass = (EditText) findViewById(R.id.reg_pass);
+        confirm = (EditText) findViewById(R.id.reg_confirm);
 
-        baseurl = "http://192.168.1.7/addressbook/index.php/";
+        persondata = getSharedPreferences("persondata", Context.MODE_PRIVATE);
 
         prgDialog = new ProgressDialog(this);
         // Set Progress Dialog Text
         prgDialog.setMessage("Please wait...");
         // Set Cancelable as False
         prgDialog.setCancelable(false);
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_log_in, menu);
+        getMenuInflater().inflate(R.menu.menu_register, menu);
         return true;
     }
 
@@ -62,74 +61,41 @@ public class LogIn extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public void onClickLogin(View v){
+    public void onClickSignUp(View v){
 
-        if(isOnline()) {
+        firstname = fname.getText().toString();
+        lastname = lname.getText().toString();
+        username = user.getText().toString();
+        password = pass.getText().toString();
+        confm = confirm.getText().toString();
 
-            username = user.getText().toString();
-            password = pass.getText().toString();
+        if (!username.matches("") && !password.matches("") && !confm.matches("") && !firstname.matches("") && !lastname.matches("")) {
 
-            if (!username.matches("") && !password.matches("")) {
+            if(password.matches(confm)){
                 RequestParams params = new RequestParams();
                 params.put("user", username);
                 params.put("pass", password);
-                fullurl = baseurl + "user/login";
+                params.put("fname", password);
+                params.put("lname", password);
+
+                fullurl = persondata.getString("baseurl", "http://192.168.1.7/addressbook/index.php") + "/user/register";
                 invokeWS(fullurl, params);
             } else {
-                Toast.makeText(getApplicationContext(), "Please fill the form, don't leave any field blank", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Confirm password incorrect", Toast.LENGTH_LONG).show();
             }
+
         } else {
-            Toast.makeText(getApplicationContext(), "Network is Disconnect", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Please fill the form, don't leave any field blank", Toast.LENGTH_LONG).show();
         }
-    }
 
-    public void onClickRegister(View v){
-
-        if(isOnline()) {
-            Intent data = new Intent(LogIn.this, Register.class);
-
-            SharedPreferences persondata = getSharedPreferences("persondata", MODE_PRIVATE);
-
-            SharedPreferences.Editor editor = persondata.edit();
-            editor.putString("baseurl", baseurl);
-            editor.commit();
-
-            startActivity(data);
-        } else {
-            Toast.makeText(getApplicationContext(), "Network is Disconnect", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    public boolean isOnline() {
-        ConnectivityManager cm =
-                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        return netInfo != null && netInfo.isConnectedOrConnecting();
-    }
-
-    private void navigatetoHomeActivity(JSONObject obj) {
-        Intent data = new Intent(LogIn.this, MainActivity.class);
-        //startActivityForResult(data, MYACTIVITY_REQUEST_CODE);
-        SharedPreferences persondata = getSharedPreferences("persondata", MODE_PRIVATE);
-        try {
-            SharedPreferences.Editor editor = persondata.edit();
-            editor.putString("baseurl", baseurl);
-            editor.putInt("usr_id", obj.getInt("usr_id"));
-            editor.putString("usr_fname", obj.getString("usr_fname"));
-            editor.putString("usr_lname", obj.getString("usr_lname"));
-            editor.commit();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        startActivity(data);
     }
 
     public void invokeWS(String url, RequestParams params){
@@ -144,8 +110,8 @@ public class LogIn extends Activity {
                 prgDialog.hide();
                 try {
                     if(response.getJSONObject("data").getBoolean("status")){
-                        Toast.makeText(getApplicationContext(), "You are successfully logged in!", Toast.LENGTH_LONG).show();
-                        navigatetoHomeActivity(response.getJSONObject("data"));
+                        Toast.makeText(getApplicationContext(), "You are successfully register!", Toast.LENGTH_LONG).show();
+                        finish();
                     }else {
                         Toast.makeText(getApplicationContext(), response.getJSONObject("data").getString("errormsg"), Toast.LENGTH_LONG).show();
                     }

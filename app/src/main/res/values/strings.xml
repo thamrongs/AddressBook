@@ -8,4 +8,6 @@
     <string name="title_activity_catagory">Catagory</string>
     <string name="title_activity_edit_address">EditAddress</string>
     <string name="title_activity_detail">Detail</string>
+    <string name="title_activity_register">Register</string>
+    <string name="title_activity_contact">Contact</string>
 </resources>
