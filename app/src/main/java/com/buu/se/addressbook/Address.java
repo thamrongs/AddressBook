@@ -49,7 +49,7 @@ public class Address extends Activity {
         fullurl = persondata.getString("baseurl", "http://192.168.1.7/addressbook/index.php/") + "contact/get";
 
         fullurl += "?cat_id="+cat_id;
-        Toast.makeText(getApplicationContext(), cat_id + "", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), cat_id + "", Toast.LENGTH_LONG).show();
 
         conList = new ArrayList<Addresses>();
         new JSONAsyncTask().execute(fullurl);
