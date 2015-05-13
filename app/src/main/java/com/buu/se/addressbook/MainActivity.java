@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -38,7 +39,7 @@ public class MainActivity extends Activity {
 
     ArrayList<Catagories> catList;
     SharedPreferences persondata;
-    String fullurl;
+    String baseurl, fullurl;
     int usr_id;
     CatagoryAdapter adapter;
     ProgressDialog prgDialog;
@@ -48,11 +49,27 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_catagory);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        getList();
+    }
+
+    public void getList(){
         persondata = getSharedPreferences("persondata", Context.MODE_PRIVATE);
-        fullurl = persondata.getString("baseurl", "http://192.168.1.7/addressbook/index.php/") + "catagory/get";
+        baseurl = persondata.getString("baseurl", "http://192.168.1.7/addressbook/index.php/");
+        fullurl = baseurl + "catagory/get";
         usr_id = persondata.getInt("usr_id", 0);
         fullurl += "?usr_id="+usr_id;
+
+        prgDialog = new ProgressDialog(this);
+        // Set Progress Dialog Text
+        prgDialog.setMessage("Please wait...");
+        // Set Cancelable as False
+        prgDialog.setCancelable(false);
 
         catList = new ArrayList<Catagories>();
         new JSONAsyncTask().execute(fullurl);
@@ -75,6 +92,45 @@ public class MainActivity extends Activity {
             }
         });
 
+        listview.setLongClickable(true);
+        listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> arg0, View view, final int position, long id) {
+//                PopupMenu popupMenu = new PopupMenu(getApplicationContext(), view);
+//                popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+//                popupMenu.show();
+//
+//                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                    @Override
+//                    public boolean onMenuItemClick(MenuItem item) {
+//                        if (item.getTitle().equals("Delete")) {
+//                            if (catList.get(position).getCatId() != 0) {
+//                                RequestParams params = new RequestParams();
+//                                params.put("cat_id", catList.get(position).getCatId());
+//                                String url = baseurl + "catagory/delete";
+//                                invokeWS(url, params);
+//
+//                            } else {
+//                                Toast.makeText(getApplicationContext(), "Don't leave any field blank", Toast.LENGTH_LONG).show();
+//                            }
+//                        }
+//                        if (item.getTitle().equals("Edit")) {
+//                            Intent data = new Intent(MainActivity.this, Catagory.class);
+//                            data.putExtra("cat_id", catList.get(position).getCatId());
+//                            data.putExtra("cat_name", catList.get(position).getCatName());
+//                            startActivityForResult(data, MYACTIVITY_REQUEST_CODE);
+//                        }
+//                        return false;
+//                    }
+//                });
+
+                Intent data = new Intent(MainActivity.this, Catagory.class);
+                data.putExtra("cat_id", catList.get(position).getCatId());
+                data.putExtra("cat_name", catList.get(position).getCatName());
+                startActivityForResult(data, MYACTIVITY_REQUEST_CODE);
+                return true;
+            }
+        });
     }
 
     @Override
@@ -92,9 +148,11 @@ public class MainActivity extends Activity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
+        if (id == R.id.action_add) {
+            Intent data = new Intent(MainActivity.this, Catagory.class);
+            startActivityForResult(data, MYACTIVITY_REQUEST_CODE);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -117,11 +175,7 @@ public class MainActivity extends Activity {
         protected Boolean doInBackground(String... urls) {
             try {
 
-                //------------------>>
                 HttpGet httppost = new HttpGet(urls[0]);
-                SharedPreferences authen = getSharedPreferences("persondata", MODE_PRIVATE);
-                String api_key = authen.getString("apikey", "");
-                httppost.addHeader("Authorization", api_key);
                 HttpClient httpclient = new DefaultHttpClient();
                 HttpResponse response = httpclient.execute(httppost);
 
@@ -165,5 +219,47 @@ public class MainActivity extends Activity {
             adapter.notifyDataSetChanged();
 
         }
+    }
+
+    public void invokeWS(String url, RequestParams params){
+        // Show Progress Dialog
+        prgDialog.show();
+        // Make RESTful webservice call using AsyncHttpClient object
+        AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
+        client.setConnectTimeout(5000);
+        client.post(url,params ,new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                prgDialog.hide();
+                try {
+                    if(response.getJSONObject("data").getBoolean("status")){
+                        Toast.makeText(getApplicationContext(), response.getJSONObject("data").getString("msg"), Toast.LENGTH_LONG).show();
+                    }else {
+                        Toast.makeText(getApplicationContext(), response.getJSONObject("data").getString("msg"), Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    Toast.makeText(getApplicationContext(), "Error Occured [Server's JSON response might be invalid]!", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+
+                prgDialog.hide();
+                // When Http response code is '404'
+                if(statusCode == 404){
+                    Toast.makeText(getApplicationContext(), "Requested resource not found", Toast.LENGTH_LONG).show();
+                }
+                // When Http response code is '500'
+                else if(statusCode == 500){
+                    Toast.makeText(getApplicationContext(), "Something went wrong at server end", Toast.LENGTH_LONG).show();
+                }
+                // When Http response code other than 404, 500
+                else{
+                    Toast.makeText(getApplicationContext(), "Cannot connect to server. \nPlease make sure IP are correct.", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 }

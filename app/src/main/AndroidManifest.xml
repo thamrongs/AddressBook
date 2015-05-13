@@ -41,6 +41,10 @@
             android:name=".Contact"
             android:label="@string/title_activity_contact" >
         </activity>
+        <activity
+            android:name=".Catagory"
+            android:label="@string/title_activity_catagory" >
+        </activity>
     </application>
 
 </manifest>

@@ -21,50 +21,28 @@ import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 
+public class Catagory extends Activity  implements View.OnClickListener {
 
-public class Contact extends Activity implements View.OnClickListener {
-
-    ArrayList<Addresses> conList;
     EditText name;
-    EditText company;
-    EditText address;
-    EditText email;
-    EditText tel;
     Button btn_edit, btn_add, btn_delete;
-    int con_id;
-    String cat_id;
     SharedPreferences persondata;
     String baseurl;
     ProgressDialog prgDialog;
+    int cat_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+        setContentView(R.layout.form_catagory);
 
         Intent intent = getIntent();
-        con_id = intent.getIntExtra("con_id", 0);
-        cat_id = intent.getStringExtra("cat_id");
+        cat_id = intent.getIntExtra("cat_id", 0);
+        String cat_name = intent.getStringExtra("cat_name");
 
-        String con_name = intent.getStringExtra("con_name");
-        String con_company = intent.getStringExtra("con_company");
-        String con_address = intent.getStringExtra("con_address");
-        String con_email = intent.getStringExtra("con_email");
-        String con_tel = intent.getStringExtra("con_tel");
 
         persondata = getSharedPreferences("persondata", Context.MODE_PRIVATE);
         baseurl = persondata.getString("baseurl", "http://192.168.1.7/addressbook/index.php/");
-
-        name = (EditText) findViewById(R.id.det_name);
-        company = (EditText) findViewById(R.id.det_company);
-        address = (EditText) findViewById(R.id.det_address);
-        email = (EditText) findViewById(R.id.det_email);
-        tel = (EditText) findViewById(R.id.det_tel);
-        btn_edit = (Button) findViewById(R.id.btn_edit);
-        btn_add = (Button) findViewById(R.id.btn_add);
-        btn_delete = (Button) findViewById(R.id.btn_delete);
 
         prgDialog = new ProgressDialog(this);
         // Set Progress Dialog Text
@@ -72,18 +50,16 @@ public class Contact extends Activity implements View.OnClickListener {
         // Set Cancelable as False
         prgDialog.setCancelable(false);
 
-        if(con_id != 0) {
-            name.setText(con_name);
-            company.setText(con_company);
-            address.setText(con_address);
-            email.setText(con_email);
-            tel.setText(con_tel);
+        name = (EditText) findViewById(R.id.cat_name);
+        btn_edit = (Button) findViewById(R.id.btn_edit);
+        btn_add = (Button) findViewById(R.id.btn_add);
+        btn_delete = (Button) findViewById(R.id.btn_delete);
 
+        if(cat_id != 0) {
+            name.setText(cat_name);
             name.setEnabled(false);
-            company.setEnabled(false);
-            address.setEnabled(false);
-            email.setEnabled(false);
-            tel.setEnabled(false);
+
+            //btn_edit.setEnabled(false);
             btn_edit.setVisibility(View.GONE);
             btn_delete.setVisibility(View.GONE);
             btn_add.setVisibility(View.GONE);
@@ -92,33 +68,16 @@ public class Contact extends Activity implements View.OnClickListener {
             btn_delete.setVisibility(View.GONE);
             btn_add.setVisibility(View.VISIBLE);
         }
-
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.btn_edit:
-                action_edit();
-                break;
-            case R.id.btn_delete:
-                action_delete();
-                break;
-            case R.id.btn_add:
-                action_add();
-                break;
-        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-
-        getMenuInflater().inflate(R.menu.menu_contact, menu);
+        getMenuInflater().inflate(R.menu.menu_catagory, menu);
 
         MenuItem item = menu.findItem(R.id.action_edit);
 
-        if (con_id == 0) {
+        if (cat_id == 0) {
             item.setVisible(false);
         } else {
             item.setVisible(true);
@@ -137,10 +96,7 @@ public class Contact extends Activity implements View.OnClickListener {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_edit) {
             name.setEnabled(true);
-            company.setEnabled(true);
-            address.setEnabled(true);
-            email.setEnabled(true);
-            tel.setEnabled(true);
+
             btn_edit.setVisibility(View.VISIBLE);
             btn_delete.setVisibility(View.VISIBLE);
             return true;
@@ -149,34 +105,35 @@ public class Contact extends Activity implements View.OnClickListener {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_edit:
+                action_edit();
+                break;
+            case R.id.btn_delete:
+                action_delete();
+                break;
+            case R.id.btn_add:
+                action_add();
+                break;
+        }
+    }
+
     public void action_edit(){
+        String cat_name = name.getText().toString();
+        int usr_id = persondata.getInt("usr_id", 0);
 
-
-        String con_name = name.getText().toString();
-        String con_company = company.getText().toString();
-        String con_address = address.getText().toString();
-        String con_email = email.getText().toString();
-        String con_tel = tel.getText().toString();
-
-        if (!con_name.matches("") && !con_tel.matches("")) {
+        if (!cat_name.matches("")) {
             RequestParams params = new RequestParams();
-            params.put("con_id", con_id);
-            params.put("con_name", con_name);
-            params.put("con_company", con_company);
-            params.put("con_address", con_address);
-            params.put("con_email", con_email);
-            params.put("con_tel", con_tel);
             params.put("cat_id", cat_id);
+            params.put("cat_name", cat_name);
+            params.put("usr_id", usr_id);
 
-            String fullurl = baseurl + "contact/update";
+            String fullurl = baseurl + "catagory/update";
             invokeWS(fullurl, params);
 
             name.setEnabled(false);
-            company.setEnabled(false);
-            address.setEnabled(false);
-            email.setEnabled(false);
-            tel.setEnabled(false);
-            btn_edit.setVisibility(View.GONE);
             finish();
         } else {
             Toast.makeText(getApplicationContext(), "Please fill the form, don't leave any field blank", Toast.LENGTH_LONG).show();
@@ -184,41 +141,37 @@ public class Contact extends Activity implements View.OnClickListener {
     }
 
     public void action_add(){
-        String con_name = name.getText().toString();
-        String con_company = company.getText().toString();
-        String con_address = address.getText().toString();
-        String con_email = email.getText().toString();
-        String con_tel = tel.getText().toString();
+        String cat_name = name.getText().toString();
 
-        if (!con_name.matches("") && !con_tel.matches("")) {
+        if (!cat_name.matches("")) {
 
+            int usr_id = persondata.getInt("usr_id", 0);
             RequestParams params = new RequestParams();
-            params.put("con_name", con_name);
-            params.put("con_company", con_company);
-            params.put("con_address", con_address);
-            params.put("con_email", con_email);
-            params.put("con_tel", con_tel);
-            params.put("cat_id", cat_id);
+            params.put("cat_name", cat_name);
+            params.put("usr_id", usr_id);
 
-            String fullurl = baseurl + "contact/insert";
+            String fullurl = baseurl + "catagory/insert";
             invokeWS(fullurl, params);
 
         } else {
-            Toast.makeText(getApplicationContext(), "Please fill the Name and Tel.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Please fill the form, don't leave any field blank", Toast.LENGTH_LONG).show();
         }
         finish();
+
     }
 
     public void action_delete(){
-        if (con_id != 0) {
+        if (cat_id != 0) {
             RequestParams params = new RequestParams();
-            params.put("con_id", con_id);
-            String url = baseurl + "contact/delete";
+            params.put("cat_id", cat_id);
+            String url = baseurl + "catagory/delete";
             invokeWS(url, params);
+
         } else {
             Toast.makeText(getApplicationContext(), "Don't leave any field blank", Toast.LENGTH_LONG).show();
         }
         finish();
+
     }
 
     public void invokeWS(String url, RequestParams params){

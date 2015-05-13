@@ -108,10 +108,29 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="59dp"
+            android:text="DELETE"
+            android:id="@+id/btn_delete"
+            android:layout_gravity="center_horizontal|bottom"
+            android:background="#D32F2F"
+            android:onClick="onClick" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="59dp"
             android:text="SAVE"
             android:id="@+id/btn_edit"
             android:layout_gravity="center_horizontal|bottom"
-            android:background="#D32F2F"
+            android:background="@color/divider"
+            android:onClick="onClick"
+            android:layout_marginBottom="63dp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="59dp"
+            android:text="ADD NEW"
+            android:id="@+id/btn_add"
+            android:layout_gravity="center_horizontal|bottom"
+            android:background="#4CAF50"
             android:onClick="onClick" />
 
     </FrameLayout>

@@ -32,7 +32,7 @@ public class Address extends Activity {
 
     ArrayList<Addresses> conList;
     SharedPreferences persondata;
-    String fullurl;
+    String fullurl, cat_id;
     AddressAdapter adapter;
     ProgressDialog prgDialog;
     final int MYACTIVITY_REQUEST_CODE = 101;
@@ -42,8 +42,19 @@ public class Address extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address);
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        getList();
+    }
+
+    public void getList() {
         Intent intent = getIntent();
-        String cat_id = intent.getStringExtra("cat_id");
+        cat_id = intent.getStringExtra("cat_id");
 
         persondata = getSharedPreferences("persondata", Context.MODE_PRIVATE);
         fullurl = persondata.getString("baseurl", "http://192.168.1.7/addressbook/index.php/") + "contact/get";
@@ -73,6 +84,7 @@ public class Address extends Activity {
                 data.putExtra("con_address", conList.get(position).getCon_address());
                 data.putExtra("con_email", conList.get(position).getCon_email());
                 data.putExtra("con_tel", conList.get(position).getCon_tel());
+                data.putExtra("cat_id", String.valueOf(cat_id));
 
                 startActivityForResult(data, MYACTIVITY_REQUEST_CODE);
             }
@@ -94,7 +106,10 @@ public class Address extends Activity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_add) {
+            Intent data = new Intent(Address.this, Contact.class);
+            data.putExtra("cat_id", String.valueOf(cat_id));
+            startActivityForResult(data, MYACTIVITY_REQUEST_CODE);
             return true;
         }
 

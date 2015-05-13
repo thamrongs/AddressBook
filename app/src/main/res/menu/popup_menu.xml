@@ -1,0 +1,7 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" tools:context="com.buu.se.addressbook.Catagory">
+    <item android:id="@+id/action_edit" android:title="Edit"
+        android:orderInCategory="100" android:showAsAction="never" />
+    <item android:id="@+id/action_delete" android:title="Delete"
+        android:orderInCategory="100" android:showAsAction="never" />
+</menu>
