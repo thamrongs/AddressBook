@@ -34,7 +34,6 @@ public class Address extends Activity {
     SharedPreferences persondata;
     String fullurl, cat_id;
     AddressAdapter adapter;
-    ProgressDialog prgDialog;
     final int MYACTIVITY_REQUEST_CODE = 101;
 
     @Override
@@ -81,9 +80,7 @@ public class Address extends Activity {
                 data.putExtra("con_id", conList.get(position).getCon_id());
                 data.putExtra("con_name", conList.get(position).getCon_name());
                 data.putExtra("con_company", conList.get(position).getCon_company());
-                data.putExtra("con_address", conList.get(position).getCon_address());
                 data.putExtra("con_email", conList.get(position).getCon_email());
-                data.putExtra("con_tel", conList.get(position).getCon_tel());
                 data.putExtra("cat_id", String.valueOf(cat_id));
 
                 startActivityForResult(data, MYACTIVITY_REQUEST_CODE);
@@ -156,9 +153,9 @@ public class Address extends Activity {
                         Addresses con = new Addresses();
 
                         con.setCon_id(object.getInt("con_id"));
+
                         con.setCon_name(object.getString("con_name").matches("null") ? "" : object.getString("con_name"));
                         con.setCon_company(object.getString("con_company").matches("null") ? "" : object.getString("con_company"));
-                        con.setCon_address(object.getString("con_address").matches("null") ? "" : object.getString("con_address"));
                         con.setCon_tel(object.getString("con_tel").matches("null") ? "" : object.getString("con_tel"));
                         con.setCon_email(object.getString("con_email").matches("null") ? "" : object.getString("con_email"));
                         con.setCon_image(object.getString("con_image").matches("null") ? "" : object.getString("con_image"));

@@ -8,7 +8,6 @@ public class Addresses {
     int con_id;
     String con_name;
     String con_company;
-    String con_address;
     String con_tel;
     String con_email;
     String con_image;
@@ -27,14 +26,6 @@ public class Addresses {
 
     public void setCon_name(String con_name) {
         this.con_name = con_name;
-    }
-
-    public String getCon_address() {
-        return con_address;
-    }
-
-    public void setCon_address(String con_address) {
-        this.con_address = con_address;
     }
 
     public String getCon_tel() {

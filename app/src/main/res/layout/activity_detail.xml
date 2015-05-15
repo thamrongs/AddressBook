@@ -54,18 +54,7 @@
             android:ems="10"
             android:id="@+id/det_email"
             android:layout_gravity="right|center_vertical"
-            android:layout_marginTop="-80dp"
-            android:textColor="@color/icons" />
-
-        <EditText
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:hint="0812345678"
-            android:ems="10"
-            android:id="@+id/det_tel"
-            android:layout_gravity="right|center_vertical"
-            android:layout_marginTop="-30dp"
+            android:layout_marginTop="-100dp"
             android:textColor="@color/icons" />
 
         <ImageView
@@ -73,37 +62,19 @@
             android:layout_height="46dp"
             android:id="@+id/imageView3"
             android:layout_gravity="left|center_vertical"
-            android:layout_marginTop="-80dp"
+            android:layout_marginTop="-100dp"
             android:background="@android:drawable/ic_dialog_email"
             android:layout_marginLeft="15dp" />
 
         <ImageView
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:id="@+id/imageView4"
+            android:layout_width="56dp"
+            android:layout_height="54dp"
+            android:id="@+id/add_telephone"
             android:layout_gravity="left|center_vertical"
-            android:layout_marginTop="-30dp"
-            android:background="@android:drawable/stat_sys_speakerphone"
-            android:layout_marginLeft="14dp" />
-
-        <ImageView
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:id="@+id/imageView5"
-            android:layout_gravity="left|center_vertical"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/ic_map"
-            android:layout_marginLeft="10dp" />
-
-        <EditText
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:ems="10"
-            android:id="@+id/det_address"
-            android:layout_gravity="right|center_vertical"
-            android:layout_marginTop="20dp"
-            android:textColor="@color/icons" />
+            android:layout_marginTop="-50dp"
+            android:background="@android:drawable/ic_input_add"
+            android:layout_marginLeft="10dp"
+            android:onClick="onClick" />
 
         <Button
             android:layout_width="match_parent"
@@ -131,6 +102,33 @@
             android:id="@+id/btn_add"
             android:layout_gravity="center_horizontal|bottom"
             android:background="#4CAF50"
+            android:onClick="onClick" />
+
+        <ListView
+            android:layout_width="243dp"
+            android:layout_height="150dp"
+            android:id="@+id/list_telephone"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginTop="45dp"
+            android:clickable="false" />
+
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:hint="080-0000000"
+            android:ems="10"
+            android:id="@+id/add_phone"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginTop="-50dp" />
+
+        <ImageView
+            android:layout_width="56dp"
+            android:layout_height="54dp"
+            android:id="@+id/imageView2"
+            android:layout_gravity="left|center_vertical"
+            android:background="@android:drawable/ic_menu_call"
+            android:layout_marginLeft="10dp"
             android:onClick="onClick" />
 
     </FrameLayout>
