@@ -202,11 +202,12 @@ public class Contact extends Activity implements View.OnClickListener {
 
             String fullurl = baseurl + "contact/insert";
             invokeWS(fullurl, params);
+            finish();
 
         } else {
             Toast.makeText(getApplicationContext(), "Please fill the Name and Tel.", Toast.LENGTH_LONG).show();
         }
-        finish();
+
     }
 
     public void action_delete(){
@@ -215,10 +216,11 @@ public class Contact extends Activity implements View.OnClickListener {
             params.put("con_id", con_id);
             String url = baseurl + "contact/delete";
             invokeWS(url, params);
+            finish();
         } else {
             Toast.makeText(getApplicationContext(), "Don't leave any field blank", Toast.LENGTH_LONG).show();
         }
-        finish();
+
     }
 
     public void invokeWS(String url, RequestParams params){

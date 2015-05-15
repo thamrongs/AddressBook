@@ -38,7 +38,7 @@ public class LogIn extends Activity {
         user = (EditText) findViewById(R.id.email);
         pass = (EditText) findViewById(R.id.password);
 
-        baseurl = "http://192.168.1.7/addressbook/index.php/";
+        baseurl = "http://54.187.11.22/addressbook/index.php/";
 
         prgDialog = new ProgressDialog(this);
         // Set Progress Dialog Text

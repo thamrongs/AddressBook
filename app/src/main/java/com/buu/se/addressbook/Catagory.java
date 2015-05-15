@@ -152,11 +152,12 @@ public class Catagory extends Activity  implements View.OnClickListener {
 
             String fullurl = baseurl + "catagory/insert";
             invokeWS(fullurl, params);
+            finish();
 
         } else {
             Toast.makeText(getApplicationContext(), "Please fill the form, don't leave any field blank", Toast.LENGTH_LONG).show();
         }
-        finish();
+
 
     }
 
@@ -166,11 +167,12 @@ public class Catagory extends Activity  implements View.OnClickListener {
             params.put("cat_id", cat_id);
             String url = baseurl + "catagory/delete";
             invokeWS(url, params);
+            finish();
 
         } else {
             Toast.makeText(getApplicationContext(), "Don't leave any field blank", Toast.LENGTH_LONG).show();
         }
-        finish();
+
 
     }
 
