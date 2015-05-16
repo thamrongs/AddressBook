@@ -178,14 +178,14 @@ public class Catagory extends Activity  implements View.OnClickListener {
 
     public void invokeWS(String url, RequestParams params){
         // Show Progress Dialog
-        prgDialog.show();
+        //prgDialog.show();
         // Make RESTful webservice call using AsyncHttpClient object
         AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
         client.setConnectTimeout(5000);
         client.post(url, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                prgDialog.hide();
+                //prgDialog.hide();
                 try {
                     if (response.getJSONObject("data").getBoolean("status")) {
                         Toast.makeText(getApplicationContext(), response.getJSONObject("data").getString("msg"), Toast.LENGTH_LONG).show();
@@ -201,7 +201,7 @@ public class Catagory extends Activity  implements View.OnClickListener {
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
 
-                prgDialog.hide();
+                //prgDialog.hide();
                 // When Http response code is '404'
                 if (statusCode == 404) {
                     Toast.makeText(getApplicationContext(), "Requested resource not found", Toast.LENGTH_LONG).show();
