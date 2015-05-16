@@ -42,7 +42,7 @@ public class Catagory extends Activity  implements View.OnClickListener {
 
 
         persondata = getSharedPreferences("persondata", Context.MODE_PRIVATE);
-        baseurl = persondata.getString("baseurl", "http://192.168.1.7/addressbook/index.php/");
+        baseurl = persondata.getString("baseurl", "http://54.187.11.22/addressbook/index.php/");
 
         prgDialog = new ProgressDialog(this);
         // Set Progress Dialog Text

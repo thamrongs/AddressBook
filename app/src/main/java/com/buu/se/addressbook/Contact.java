@@ -73,7 +73,7 @@ public class Contact extends Activity implements View.OnClickListener {
         String con_email = intent.getStringExtra("con_email");
 
         persondata = getSharedPreferences("persondata", Context.MODE_PRIVATE);
-        baseurl = persondata.getString("baseurl", "http://192.168.1.7/addressbook/index.php/");
+        baseurl = persondata.getString("baseurl", "http://54.187.11.22/addressbook/index.php/");
 
         name = (EditText) findViewById(R.id.det_name);
         company = (EditText) findViewById(R.id.det_company);
@@ -83,9 +83,7 @@ public class Contact extends Activity implements View.OnClickListener {
         btn_add = (Button) findViewById(R.id.btn_add);
         btn_delete = (Button) findViewById(R.id.btn_delete);
         add_telephone = (ImageView) findViewById(R.id.add_telephone);
-
-        persondata = getSharedPreferences("persondata", Context.MODE_PRIVATE);
-        String fullurl = persondata.getString("baseurl", "http://192.168.1.7/addressbook/index.php/") + "contact/get_telephone";
+        String fullurl = baseurl + "contact/get_telephone";
 
         fullurl += "?con_id="+con_id;
 

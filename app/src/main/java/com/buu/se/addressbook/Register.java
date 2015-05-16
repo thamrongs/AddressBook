@@ -83,10 +83,10 @@ public class Register extends Activity {
                 RequestParams params = new RequestParams();
                 params.put("user", username);
                 params.put("pass", password);
-                params.put("fname", password);
-                params.put("lname", password);
+                params.put("fname", firstname);
+                params.put("lname", lastname);
 
-                fullurl = persondata.getString("baseurl", "http://192.168.1.7/addressbook/index.php") + "/user/register";
+                fullurl = persondata.getString("baseurl", "http://54.187.11.22/addressbook/index.php") + "/user/register";
                 invokeWS(fullurl, params);
             } else {
                 Toast.makeText(getApplicationContext(), "Confirm password incorrect", Toast.LENGTH_LONG).show();

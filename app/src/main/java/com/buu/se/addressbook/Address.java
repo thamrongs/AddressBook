@@ -56,7 +56,7 @@ public class Address extends Activity {
         cat_id = intent.getStringExtra("cat_id");
 
         persondata = getSharedPreferences("persondata", Context.MODE_PRIVATE);
-        fullurl = persondata.getString("baseurl", "http://192.168.1.7/addressbook/index.php/") + "contact/get";
+        fullurl = persondata.getString("baseurl", "http://54.187.11.22/addressbook/index.php/") + "contact/get";
 
         fullurl += "?cat_id="+cat_id;
         //Toast.makeText(getApplicationContext(), cat_id + "", Toast.LENGTH_LONG).show();
