@@ -372,7 +372,7 @@ public class Contact extends Activity implements View.OnClickListener {
 
     public void invokeWS(String url, RequestParams params){
         // Show Progress Dialog
-        //prgDialog.show();
+        prgDialog.show();
         // Make RESTful webservice call using AsyncHttpClient object
         AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
         client.setConnectTimeout(5000);
@@ -393,7 +393,7 @@ public class Contact extends Activity implements View.OnClickListener {
                 } catch (JSONException e) {
                     //Toast.makeText(getApplicationContext(), "Error Occured [Server's JSON response might be invalid]!", Toast.LENGTH_LONG).show();
                 }
-                //prgDialog.hide();
+                prgDialog.hide();
 
             }
 
@@ -401,7 +401,7 @@ public class Contact extends Activity implements View.OnClickListener {
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
 
-                //prgDialog.hide();
+                prgDialog.hide();
                 // When Http response code is '404'
                 if (statusCode == 404) {
                     Toast.makeText(getApplicationContext(), "Requested resource not found", Toast.LENGTH_LONG).show();
